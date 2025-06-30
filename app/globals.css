@@ -1,26 +1,256 @@
-@import "tailwindcss";
+/* Tailwind CSS configuration */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-primary-600 text-white font-semibold rounded-md shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-opacity-75;
+  }
+  
+  .form-input {
+    @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Floating label interactions */
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label,
+select:focus-within ~ label,
+select:not(:placeholder-shown) ~ label {
+  transform: scale(0.85) translateY(-10px);
+  color: #4F46E5;
+}
+
+/* Enhanced page transition animations */
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pageSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes navItemHover {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(4px);
+  }
+}
+
+.animate-pageSlideIn {
+  animation: pageSlideIn 0.4s ease-out;
+}
+
+.animate-pageSlideUp {
+  animation: pageSlideUp 0.3s ease-out;
+}
+
+.nav-item-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item-hover:hover {
+  animation: navItemHover 0.2s ease-out forwards;
+}
+
+/* Enhanced navigation item transitions for seamless experience */
+.nav-item-smooth {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  transform-origin: left center;
+}
+
+.nav-item-smooth:hover:not(:disabled) {
+  transform: translateX(3px);
+  background-color: rgba(249, 250, 251, 0.8);
+}
+
+.nav-item-smooth:active:not(:disabled) {
+  transform: translateX(1px) scale(0.98);
+}
+
+/* Seamless page transition improvements */
+@keyframes seamlessFadeIn {
+  from {
+    opacity: 0.7;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: seamlessFadeIn 0.25s ease-out forwards;
+}
+
+/* Smooth navigation state transitions */
+.navigation-overlay {
+  backdrop-filter: blur(1px);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Enhanced loading states */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.loading-glow {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+/* Prevent flash of content during navigation */
+.content-stable {
+  min-height: 400px;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.content-stable.transitioning {
+  opacity: 0.9;
+  transform: translateY(4px);
+}
+
+/* Responsive navigation improvements */
+@media (max-width: 768px) {
+  .nav-item-hover:hover {
+    transform: none;
+  }
+  
+  .mobile-nav-slide {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .mobile-nav-slide.open {
+    transform: translateX(0);
+  }
+}
+
+/* University admin specific styles */
+.university-admin-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.university-admin-content {
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Table hover effects for university admin */
+.university-table-row {
+  transition: all 0.15s ease-in-out;
+}
+
+.university-table-row:hover {
+  background-color: rgba(249, 250, 251, 0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Status indicators */
+.status-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.status-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.status-approved::before {
+  background-color: #10b981;
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+}
+
+.status-pending::before {
+  background-color: #f59e0b;
+  box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.status-rejected::before {
+  background-color: #ef4444;
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
+}
+
+/* Prevent layout shift during transitions */
+.layout-stable {
+  contain: layout style paint;
+}
+
+/* Micro-animations for better UX */
+@keyframes gentleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.gentle-bounce:hover {
+  animation: gentleBounce 0.4s ease-in-out;
 }
